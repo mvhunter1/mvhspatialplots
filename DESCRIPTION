@@ -14,12 +14,9 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
-    Seurat,
     dplyr,
     ggplot2,
-    cowplot,
     scales,
-    pals,
     fgsea,
     msigdbr,
     limma,
@@ -28,4 +25,9 @@ Imports:
     stringr,
     data.table
 Depends: 
-    tidyverse
+    tidyverse,
+    Seurat,
+    pals,
+    cowplot,
+    fgsea,
+
