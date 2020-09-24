@@ -2,10 +2,11 @@
 #' @description convert the output of the Seurat function FindMarkers from fish genes to human.
 #' @param fish_genelist FindMarkers results dataframe.
 #' @param create_ranked_vector if T, will convert the output into a ranked vector with human genes as name and avg_logFC as values, to use for GSEA.
+#' @param remove_ribosomal_genes if T, will remove anything starting with rps or rpl from the gene list
 #' @export
 #' @return if create_ranked_vector = T, a ranked vector with human genes as name and avg_logFC as values, to use for GSEA. if F, a dataframe.
 #'
-convert_FindMarkers_human <- function(fish_genelist, create_ranked_vector = T) {
+convert_FindMarkers_human <- function(fish_genelist, create_ranked_vector = T, remove_ribosomal_genes = T) {
   # convert output of FindMarkers to human genes
   # if create_ranked_vector = T: will return a ranked vector with human gene symbols and logFC, to be used for GSEA
 
@@ -13,6 +14,10 @@ convert_FindMarkers_human <- function(fish_genelist, create_ranked_vector = T) {
   fish.human.convert.Z11 <- fish.human.convert.Z11[fish.human.convert.Z11$DIOPT_Score > 6, ]
 
   genelist <- fish_genelist
+
+  if (remove_ribosomal_genes) {
+    genelist <- genelist %>% .[grep(pattern = "^rps|^rpl", x = .$gene, invert = T, ignore.case = T),]
+  }
 
   if (colnames(genelist)[1] == "p_val") {
     genelist <- genelist %>% tibble::rownames_to_column(var = "fish_gene")
