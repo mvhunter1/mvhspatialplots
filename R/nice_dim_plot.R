@@ -5,13 +5,12 @@
 #' @param cols optional: colours to label the grouped points by.
 #' @param pt_size point size.
 #' @param label label groups with text on plot?
-#' @param show_legend if T, will include the legend but won't label points w/text on plot.
 #' @param reduction either "umap" or "pca".
 #' @param dims_plot dimensions to plot.
 #' @export
 #' @return UMAP or PCA plot.
 
-nice_dim_plot <- function(seurat_obj, group_by = "seurat_clusters", cols = NULL, pt_size = 1.3, label = T, show_legend = F, reduction = "umap", dims_plot = 1:2) {
+nice_dim_plot <- function(seurat_obj, group_by = "seurat_clusters", cols = NULL, pt_size = 1.3, label = T, reduction = "umap", dims_plot = 1:2) {
 
   if (reduction == "umap") {
     xlab <- "UMAP 1"
@@ -25,44 +24,79 @@ nice_dim_plot <- function(seurat_obj, group_by = "seurat_clusters", cols = NULL,
     ylab <- paste0("PC", dims_plot[2], " ", round(pct[dims_plot[2]],2), "%")
   }
 
-  if (label == T) {
+  if (length(group_by) == 1) {
 
-    plot <- Seurat::DimPlot(seurat_obj,
-                            group.by = group_by,
-                            cols = cols,
-                            dims = dims_plot,
-                            reduction = reduction,
-                            pt.size = pt_size,
-                            label = T,
-                            label.size = 6) +
-      theme(axis.ticks = element_blank(),
-            axis.text = element_blank(),
-            axis.title = element_text(size = 20),
-            axis.line = element_line(size = 1)) +
-      xlab(xlab) +
-      ylab(ylab)
-
-    if (show_legend == F) {
-      plot <- plot + NoLegend()
-      return(plot)
+    if (label == T) {
+      plot <- Seurat::DimPlot(seurat_obj,
+                              group.by = group_by,
+                              pt.size = pt.size,
+                              reduction = reduction,
+                              cols = cols,
+                              label = T) +
+        NoLegend() +
+        xlab(xlab) +
+        ylab(ylab) +
+        theme(axis.ticks = element_blank(),
+              axis.text = element_blank(),
+              axis.title = element_text(size = 20),
+              axis.line = element_line(size = 1))
     } else {
-      return(plot)
+      plot <- Seurat::DimPlot(seurat_obj,
+                              group.by = group_by,
+                              pt.size = pt.size,
+                              reduction = reduction,
+                              cols = cols,
+                              label = F) +
+        xlab(xlab) +
+        ylab(ylab) +
+        theme(axis.ticks = element_blank(),
+              axis.text = element_blank(),
+              axis.title = element_text(size = 20),
+              axis.line = element_line(size = 1))
     }
-
-  } else if (label == F) {
-
-    plot <- Seurat::DimPlot(seurat_obj,
-                            group.by = group_by,
-                            cols = cols,
-                            dims = dims_plot,
-                            reduction = reduction,
-                            pt.size = pt_size) +
-      theme(axis.ticks = element_blank(),
-            axis.text = element_blank(),
-            axis.title = element_text(size = 20),
-            axis.line = element_line(size = 1)) +
-      xlab(xlab) +
-      ylab(ylab)
     return(plot)
+
+  } else if (length(group_by) > 1) {
+
+    if (label == T) {
+      plots <- Seurat::DimPlot(seurat_obj,
+                               group.by = group_by,
+                               pt.size = pt.size,
+                               combine = F,
+                               reduction = reduction,
+                               cols = cols,
+                               label = T)
+      plots <- lapply(plots, function(x) x +
+                        NoLegend() +
+                        xlab(xlab) +
+                        ylab(ylab) +
+                        theme(axis.ticks = element_blank(),
+                              axis.text = element_blank(),
+                              axis.title = element_text(size = 20),
+                              axis.line = element_line(size = 1)))
+    } else {
+      plots <- Seurat::DimPlot(seurat_obj,
+                               group.by = group_by,
+                               pt.size = pt.size,
+                               combine = F,
+                               reduction = reduction,
+                               cols = cols,
+                               label = F)
+      plots <- lapply(plots, function(x) x +
+                        xlab(xlab) +
+                        ylab(ylab) +
+                        theme(axis.ticks = element_blank(),
+                              axis.text = element_blank(),
+                              axis.title = element_text(size = 20),
+                              axis.line = element_line(size = 1)))
+    }
+    plots_use <- cowplot::plot_grid(plotlist = plots, ncol = n_col)
+    return(plots_use)
+  } else {
+    stop("group_by is missing")
   }
 }
+
+
+
+

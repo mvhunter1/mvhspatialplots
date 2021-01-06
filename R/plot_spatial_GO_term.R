@@ -1,12 +1,20 @@
+#' @title plot_spatial_GO_term
+#' @description add expression data for GO term to ST object metadata, and plot. Note: Seurat object for ABC must be loaded, and expression and pval matrices.
+#' @param pathway_add GO pathway you want to plot.
+#' @param plot_tumor plot expression in tumor region?
+#' @param plot_interface plot expression in interface region?
+#' @export
+#' @return plot.
+
 plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F) {
   # this assumes that the Seurat objects for ABC are already loaded, and the expression and pval matrices
-  
+
   if (length(pathway.add) == 1) {
-    
+
     pathway.add <- pathway_add
     samples <- c("A1", "B1", "C1")
     plots <- NULL
-    
+
     if (plot_tumor) {
       for (sample in samples) {
         if (sample == "A1") {
@@ -14,7 +22,7 @@ plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F
           names(metadata.add) <- gsub(pattern = "_1", replacement = "", x = names(metadata.add))
           A1 <- AddMetaData(A1, metadata = metadata.add, col.name = pathway.add)
           pval <- A1.t.pval[rownames(A1.t.pval) == pathway.add,] %>% signif(digits = 4)
-          plots[[sample]] <- SpatialPlot(A1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) + 
+          plots[[sample]] <- SpatialPlot(A1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) +
             scale_fill_gradientn(colours = brewer.rdbu(n = 100) %>% rev()) +
             labs(title = pathway.add, subtitle = paste("P =", pval)) +
             theme(legend.position = "none", plot.title = element_text(size = 14, hjust = 0.5), plot.subtitle = element_text(size = 12, hjust = 0.5))
@@ -23,7 +31,7 @@ plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F
           names(metadata.add) <- gsub(pattern = "_2", replacement = "", x = names(metadata.add))
           B1 <- AddMetaData(B1, metadata = metadata.add, col.name = pathway.add)
           pval <- B1.t.pval[rownames(B1.t.pval) == pathway.add,] %>% signif(digits = 4)
-          plots[[sample]] <- SpatialPlot(B1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) + 
+          plots[[sample]] <- SpatialPlot(B1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) +
             scale_fill_gradientn(colours = brewer.rdbu(n = 100) %>% rev()) +
             labs(title = pathway.add, subtitle = paste("P =", pval)) +
             theme(legend.position = "none", plot.title = element_text(size = 14, hjust = 0.5), plot.subtitle = element_text(size = 12, hjust = 0.5))
@@ -32,7 +40,7 @@ plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F
           names(metadata.add) <- gsub(pattern = "_3", replacement = "", x = names(metadata.add))
           C1 <- AddMetaData(C1, metadata = metadata.add, col.name = pathway.add)
           pval <- C1.t.pval[rownames(C1.t.pval) == pathway.add,] %>% signif(digits = 4)
-          plots[[sample]] <- SpatialPlot(C1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) + 
+          plots[[sample]] <- SpatialPlot(C1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) +
             scale_fill_gradientn(colours = brewer.rdbu(n = 100) %>% rev()) +
             labs(title = pathway.add, subtitle = paste("P =", pval)) +
             theme(legend.position = "none", plot.title = element_text(size = 14, hjust = 0.5), plot.subtitle = element_text(size = 12, hjust = 0.5))
@@ -45,7 +53,7 @@ plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F
           names(metadata.add) <- gsub(pattern = "_1", replacement = "", x = names(metadata.add))
           A1 <- AddMetaData(A1, metadata = metadata.add, col.name = pathway.add)
           pval <- A1.i.pval[rownames(A1.i.pval) == pathway.add,] %>% signif(digits = 4)
-          plots[[sample]] <- SpatialPlot(A1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) + 
+          plots[[sample]] <- SpatialPlot(A1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) +
             scale_fill_gradientn(colours = brewer.rdbu(n = 100) %>% rev()) +
             labs(title = pathway.add, subtitle = paste("P =", pval)) +
             theme(legend.position = "none", plot.title = element_text(size = 14, hjust = 0.5), plot.subtitle = element_text(size = 12, hjust = 0.5))
@@ -54,7 +62,7 @@ plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F
           names(metadata.add) <- gsub(pattern = "_2", replacement = "", x = names(metadata.add))
           B1 <- AddMetaData(B1, metadata = metadata.add, col.name = pathway.add)
           pval <- B1.i.pval[rownames(B1.i.pval) == pathway.add,] %>% signif(digits = 4)
-          plots[[sample]] <- SpatialPlot(B1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) + 
+          plots[[sample]] <- SpatialPlot(B1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) +
             scale_fill_gradientn(colours = brewer.rdbu(n = 100) %>% rev()) +
             labs(title = pathway.add, subtitle = paste("P =", pval)) +
             theme(legend.position = "none", plot.title = element_text(size = 14, hjust = 0.5), plot.subtitle = element_text(size = 12, hjust = 0.5))
@@ -63,7 +71,7 @@ plot_spatial_GO_term <- function(pathway_add, plot_tumor = T, plot_interface = F
           names(metadata.add) <- gsub(pattern = "_3", replacement = "", x = names(metadata.add))
           C1 <- AddMetaData(C1, metadata = metadata.add, col.name = pathway.add)
           pval <- C1.i.pval[rownames(C1.i.pval) == pathway.add,] %>% signif(digits = 4)
-          plots[[sample]] <- SpatialPlot(C1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) + 
+          plots[[sample]] <- SpatialPlot(C1, features = pathway.add, image.alpha = 0, stroke = 0, pt.size.factor = 1.3) +
             scale_fill_gradientn(colours = brewer.rdbu(n = 100) %>% rev()) +
             labs(title = pathway.add, subtitle = paste("P =", pval)) +
             theme(legend.position = "none", plot.title = element_text(size = 14, hjust = 0.5), plot.subtitle = element_text(size = 12, hjust = 0.5))
