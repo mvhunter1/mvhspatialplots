@@ -7,7 +7,7 @@
 #' @param sort sort X-axis in descending order of mean expression?
 #' @param dims_plot dimensions to plot.
 #' @param plot_hline plot a dashed horizontal line at 0?
-#' @export
+#' @export vlnplot_compare_ST_SC
 #' @return violin plots.
 
 vlnplot_compare_ST_SC <- function(SC_obj, ST_obj, features, pt_size = 0.3, sort = T, plot_hline = T) {
