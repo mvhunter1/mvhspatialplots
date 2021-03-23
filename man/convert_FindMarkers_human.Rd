@@ -4,12 +4,18 @@
 \alias{convert_FindMarkers_human}
 \title{convert_FindMarkers_human}
 \usage{
-convert_FindMarkers_human(fish_genelist, create_ranked_vector = T)
+convert_FindMarkers_human(
+  fish_genelist,
+  create_ranked_vector = T,
+  remove_ribosomal_genes = T
+)
 }
 \arguments{
 \item{fish_genelist}{FindMarkers results dataframe.}
 
 \item{create_ranked_vector}{if T, will convert the output into a ranked vector with human genes as name and avg_logFC as values, to use for GSEA.}
+
+\item{remove_ribosomal_genes}{if T, will remove anything starting with rps or rpl from the gene list}
 }
 \value{
 if create_ranked_vector = T, a ranked vector with human genes as name and avg_logFC as values, to use for GSEA. if F, a dataframe.

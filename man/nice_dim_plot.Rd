@@ -10,7 +10,6 @@ nice_dim_plot(
   cols = NULL,
   pt_size = 1.3,
   label = T,
-  show_legend = F,
   reduction = "umap",
   dims_plot = 1:2
 )
@@ -25,8 +24,6 @@ nice_dim_plot(
 \item{pt_size}{point size.}
 
 \item{label}{label groups with text on plot?}
-
-\item{show_legend}{if T, will include the legend but won't label points w/text on plot.}
 
 \item{reduction}{either "umap" or "pca".}
 

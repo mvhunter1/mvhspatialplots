@@ -4,22 +4,31 @@
 \alias{nice_scatter_plot}
 \title{nice_scatter_plot}
 \usage{
-nice_scatter_plot(df, x_var, y_var, fit_line = T, calculate_rsq = T)
+nice_scatter_plot(
+  df,
+  x_var,
+  y_var,
+  fit_line = T,
+  calculate_rsq = T,
+  calculate_R = T
+)
 }
 \arguments{
-\item{df}{dataframe with variables to plot.}
+\item{df}{dataframe containing the data you want to plot.}
 
-\item{x_var}{variable to be plotted on X axis inputted as string, should be a column in df.}
+\item{x_var}{variable to be plotted on the x axis, as string.}
 
-\item{y_var}{variable to be plotted on Y axis inputted as string, should be a column in df.}
+\item{y_var}{variable to be plotted on the y axis, as string.}
 
-\item{fit_line}{set to T to perform linear regression and fit a line.}
+\item{fit_line}{if T, will fit a line using linear regression.}
 
-\item{calculate_rsq}{set to T to calculate Rsq of line fitting.}
+\item{calculate_rsq}{if T, will calculate Rsq.}
+
+\item{calculate_R}{if T, will calculate R.}
 }
 \value{
-scatter plot.
+scatter plot. R and Rsq will be printed on plot if calculated.
 }
 \description{
-create nice looking scatter plot with optional linear regression/line fitting.
+create a nice looking scatter plot comparing 2 variables, with optional linear regression and calculation of R and Rsq.
 }
