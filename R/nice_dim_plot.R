@@ -93,7 +93,7 @@ nice_dim_plot <- function(seurat_obj, group_by = "seurat_clusters", cols = NULL,
     plots_use <- cowplot::plot_grid(plotlist = plots, ncol = n_col)
     return(plots_use)
   } else {
-    stop("group_by is missing")
+    stop("group by is missing")
   }
 }
 
