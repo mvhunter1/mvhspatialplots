@@ -5,21 +5,21 @@
 \title{convert_FindMarkers_human}
 \usage{
 convert_FindMarkers_human(
-  fish_genelist,
-  create_ranked_vector = T,
-  remove_ribosomal_genes = T
+  genelist,
+  remove_ribosomal_genes = T,
+  create_ranked_vector = T
 )
 }
 \arguments{
-\item{fish_genelist}{FindMarkers results dataframe.}
+\item{genelist}{FindMarkers output dataframe. Needs to have a column with the gene names called "gene" to proceed with this function.}
 
-\item{create_ranked_vector}{if T, will convert the output into a ranked vector with human genes as name and avg_logFC as values, to use for GSEA.}
+\item{remove_ribosomal_genes}{default = T, remove ribosomal genes from FindMarkers results?}
 
-\item{remove_ribosomal_genes}{if T, will remove anything starting with rps or rpl from the gene list}
+\item{create_ranked_vector}{default = T, create ranked vector to use with fgsea?}
 }
 \value{
-if create_ranked_vector = T, a ranked vector with human genes as name and avg_logFC as values, to use for GSEA. if F, a dataframe.
+ranked vector or dataframe with converted human genes.
 }
 \description{
-convert the output of the Seurat function FindMarkers from fish genes to human.
+convert the results of FindMarkers (dataframe) to human genes and create ranked vector for GSEA. * Improved version!
 }

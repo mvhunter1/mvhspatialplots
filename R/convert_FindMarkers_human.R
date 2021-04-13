@@ -1,5 +1,5 @@
 #' @title convert_FindMarkers_human
-#' @description convert the results of FindMarkers (dataframe) to human genes and create ranked vector for GSEA. * Improved version.
+#' @description convert the results of FindMarkers (dataframe) to human genes and create ranked vector for GSEA. * Improved version!
 #' @param genelist FindMarkers output dataframe. Needs to have a column with the gene names called "gene" to proceed with this function.
 #' @param remove_ribosomal_genes default = T, remove ribosomal genes from FindMarkers results?
 #' @param create_ranked_vector default = T, create ranked vector to use with fgsea?
