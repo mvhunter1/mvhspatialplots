@@ -11,15 +11,15 @@ convert_motif_targets_human(
 )
 }
 \arguments{
-\item{motif_genes}{character vector of the motif target genes (fish).}
+\item{motif_genes}{character vector with the list of genes enriched in your motif of interest.}
 
-\item{expression_data}{dataframe of the corresponding expression data for your genelist (usually output of FindMarkers). NOTE: the function assumes the gene names are in column 2 of this dataframe - if you're getting an error, check that first.}
+\item{expression_data}{FindMarkers results used to create original genelist for HOMER.}
 
-\item{create_ranked_vector}{if T, will create a ranked vector of the human orthologs and expression data - to be used for GSEA.}
+\item{create_ranked_vector}{default = T, create ranked vector to use with fgsea?}
 }
 \value{
-if create_ranked_vector = T, will return a ranked vector to be used for GSEA. if F, a dataframe.
+ranked vector or dataframe with converted human genes.
 }
 \description{
-convert HOMER motif target genes to human and add corresponding data - intended for cases when you want to perform GSEA on the HOMER motif target genes.
+convert the genelist from HOMER, i.e genes enriched in a particular motif, to a ranked vector for GSEA, using the original FindMarkers results and adding human gene names. * Improved version!
 }
