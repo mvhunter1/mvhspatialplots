@@ -10,6 +10,7 @@
 #' @param scale_data plot Z-scored data?
 #' @param cutoffs expression level cutoffs for plotting.
 #' @param order plot cells in order of expression?
+#' @param cols optional: colourmap.
 #' @export
 #' @return UMAP or PCA plot.
 
@@ -29,8 +30,10 @@ nice_feature_plot <- function(seurat_obj, features, pt.size = 1.3, n_col = NULL,
 
   if (diverging_cmap) {
     cols <- pals::brewer.rdbu(n = 100) %>% rev()
+  } else if (is.null(cols)) {
+    cols <- pals::virids(n = 100)
   } else {
-    cols <- pals::magma(n = 100) %>% rev()
+    cols <- cols
   }
 
   slot <- ifelse(scale_data == T, "scale.data", "data")
