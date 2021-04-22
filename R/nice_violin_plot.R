@@ -13,10 +13,12 @@
 #'
 nice_violin_plot <- function(seurat_obj, features, group_by = NULL, cols = NULL, pt.size = 0.3, sort = T, n_col = NULL, plot_hline = T) {
 
-  if (is.null(cols)) {
-    n_cols <- seurat_obj[[]] %>% dplyr::select(all_of(group_by)) %>% unique() %>% nrow()
-    if (n_cols <= 12) {
-      cols <- pals::tol(n_cols)
+  if (!is.null(group_by)) {
+    if (is.null(cols)) {
+      n_cols <- seurat_obj[[]] %>% dplyr::select(all_of(group_by)) %>% unique() %>% nrow()
+      if (n_cols <= 12) {
+        cols <- pals::tol(n_cols)
+      }
     }
   }
 
