@@ -14,7 +14,8 @@ nice_feature_plot(
   diverging_cmap = F,
   scale_data = F,
   cutoffs = NA,
-  order = F
+  order = F,
+  cols = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ nice_feature_plot(
 \item{cutoffs}{expression level cutoffs for plotting.}
 
 \item{order}{plot cells in order of expression?}
+
+\item{cols}{optional: colourmap.}
 }
 \value{
 UMAP or PCA plot.

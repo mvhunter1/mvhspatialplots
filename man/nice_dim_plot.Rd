@@ -6,7 +6,7 @@
 \usage{
 nice_dim_plot(
   seurat_obj,
-  group_by = "seurat_clusters",
+  group_by = NULL,
   cols = NULL,
   pt_size = 1.3,
   label = T,
