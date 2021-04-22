@@ -12,11 +12,20 @@
 #' @return violin plot.
 #'
 nice_violin_plot <- function(seurat_obj, features, group_by = NULL, cols = NULL, pt.size = 0.3, sort = T, n_col = NULL, plot_hline = T) {
+
+  if (is.null(cols)) {
+    n_cols <- seurat_obj[[]] %>% dplyr::select(all_of(group_by)) %>% unique() %>% nrow()
+    if (n_cols <= 12) {
+      cols <- pals::tol(n_cols)
+    }
+  }
+
   if (length(features) == 1) {
     plot <- Seurat::VlnPlot(seurat_obj,
                             group.by = group_by,
                             features = features,
                             pt.size = pt.size,
+                            cols = cols,
                             sort = sort) +
       Seurat::NoLegend() +
       theme(axis.title.x = element_blank(),
@@ -24,16 +33,16 @@ nice_violin_plot <- function(seurat_obj, features, group_by = NULL, cols = NULL,
 
     if (plot_hline == T) {
       plot <- plot + geom_hline(yintercept = 0, linetype = "dashed")
-      return(plot)
-    } else {
-      return(plot)
     }
+    return(plot)
+
   } else {
     plotlist <- Seurat::VlnPlot(seurat_obj,
                                 group.by = group_by,
                                 features = features,
                                 pt.size = pt.size,
                                 sort = sort,
+                                cols = cols,
                                 combine = F)
     plotlist <- lapply(plotlist, function(x)
       x + theme(axis.title.x = element_blank(),

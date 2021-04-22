@@ -10,7 +10,7 @@
 #' @export
 #' @return UMAP or PCA plot.
 
-nice_dim_plot <- function(seurat_obj, group_by = "seurat_clusters", cols = NULL, pt_size = 1.3, label = T, reduction = "umap", dims_plot = 1:2) {
+nice_dim_plot <- function(seurat_obj, group_by = NULL, cols = NULL, pt_size = 1.3, label = T, reduction = "umap", dims_plot = 1:2) {
 
   if (reduction == "umap") {
     xlab <- "UMAP 1"
@@ -25,6 +25,13 @@ nice_dim_plot <- function(seurat_obj, group_by = "seurat_clusters", cols = NULL,
   }
 
   if (length(group_by) == 1) {
+
+    if (is.null(cols)) {
+      n_cols <- seurat_obj[[]] %>% dplyr::select(all_of(group_by)) %>% unique() %>% nrow()
+      if (n_cols <= 12) {
+        cols <- pals::tol(n_cols)
+      }
+    }
 
     if (label == T) {
       plot <- Seurat::DimPlot(seurat_obj,
